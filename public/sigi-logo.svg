@@ -1,0 +1,28 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="32" fill="#52734d"/>
+  
+  <!-- Half body silhouette -->
+  <path d="M32 12C35.5 12 38.5 15 38.5 18.5C38.5 22 35.5 25 32 25C28.5 25 25.5 22 25.5 18.5C25.5 15 28.5 12 32 12Z" fill="white"/>
+  
+  <!-- Body/torso -->
+  <path d="M20 28C20 26 21.5 24.5 23.5 24.5H40.5C42.5 24.5 44 26 44 28V50C44 51.1 43.1 52 42 52H22C20.9 52 20 51.1 20 50V28Z" fill="white"/>
+  
+  <!-- Brain silhouette inside head -->
+  <g transform="translate(27, 15)">
+    <!-- Main brain shape -->
+    <path d="M10 3C11.5 3 12.8 3.8 13.5 5C14.2 3.8 15.5 3 17 3C19.2 3 21 4.8 21 7C21 7.5 20.9 8 20.7 8.4C21.5 9.1 22 10.1 22 11.2C22 13.4 20.2 15.2 18 15.2C17.3 15.2 16.7 15 16.1 14.6C15.5 15.4 14.6 16 13.5 16C12.4 16 11.5 15.4 10.9 14.6C10.3 15 9.7 15.2 9 15.2C6.8 15.2 5 13.4 5 11.2C5 10.1 5.5 9.1 6.3 8.4C6.1 8 6 7.5 6 7C6 4.8 7.8 3 10 3Z" fill="#52734d"/>
+    
+    <!-- Brain details -->
+    <path d="M8 6C8.6 6 9 6.4 9 7C9 7.6 8.6 8 8 8C7.4 8 7 7.6 7 7C7 6.4 7.4 6 8 6Z" fill="white"/>
+    <path d="M12 6C12.6 6 13 6.4 13 7C13 7.6 12.6 8 12 8C11.4 8 11 7.6 11 7C11 6.4 11.4 6 12 6Z" fill="white"/>
+    <path d="M16 6C16.6 6 17 6.4 17 7C17 7.6 16.6 8 16 8C15.4 8 15 7.6 15 7C15 6.4 15.4 6 16 6Z" fill="white"/>
+    
+    <!-- Brain folds -->
+    <path d="M8 9C9 9 10 9.5 11 10C12 9.5 13 9 14 9" stroke="white" strokeWidth="0.8" fill="none"/>
+    <path d="M9 11C10 11.5 11 12 12 12C13 12 14 11.5 15 11" stroke="white" strokeWidth="0.8" fill="none"/>
+  </g>
+  
+  <!-- Heart symbol on chest (representing mental health) -->
+  <path d="M32 35L30.5 33.7C27.2 30.7 25 28.7 25 26.2C25 24.2 26.6 22.5 28.5 22.5C29.6 22.5 30.6 23 31.2 23.8C31.8 23 32.8 22.5 34 22.5C35.9 22.5 37.5 24.2 37.5 26.2C37.5 28.7 35.3 30.7 32 33.7L32 35Z" fill="#52734d"/>
+</svg>

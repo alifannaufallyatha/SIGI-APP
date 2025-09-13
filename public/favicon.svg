@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="#52734d"/>
+  
+  <!-- Head -->
+  <circle cx="16" cy="9" r="3.5" fill="white"/>
+  
+  <!-- Body -->
+  <path d="M10 14C10 13 10.5 12 11.5 12H20.5C21.5 12 22 13 22 14V26C22 26.5 21.5 27 21 27H11C10.5 27 10 26.5 10 26V14Z" fill="white"/>
+  
+  <!-- Brain inside head -->
+  <g transform="translate(13, 6.5)">
+    <path d="M6 1.5C6.8 1.5 7.5 2.2 7.5 3C7.5 3.8 6.8 4.5 6 4.5C5.2 4.5 4.5 3.8 4.5 3C4.5 2.2 5.2 1.5 6 1.5Z" fill="#52734d"/>
+    <circle cx="3" cy="2.5" r="1" fill="#52734d"/>
+    <circle cx="1.5" cy="4" r="0.8" fill="#52734d"/>
+  </g>
+  
+  <!-- Small heart on chest -->
+  <path d="M16 18L15.2 17.3C13.6 15.8 12.5 14.8 12.5 13.6C12.5 12.6 13.3 11.8 14.2 11.8C14.8 11.8 15.3 12.1 15.6 12.4C15.9 12.1 16.4 11.8 17 11.8C17.9 11.8 18.7 12.6 18.7 13.6C18.7 14.8 17.6 15.8 16 17.3L16 18Z" fill="#52734d"/>
+</svg>
