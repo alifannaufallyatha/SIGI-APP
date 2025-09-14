@@ -101,14 +101,16 @@ const questionTextStyle: React.CSSProperties = {
 const optionsContainerStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.8rem',
+  gap: '0.75rem',
+  marginTop: '1rem',
+  width: '100%',
 };
 
 const optionStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   gap: '0.8rem',
-  padding: '0.8rem',
+  padding: '1rem',
   borderRadius: '8px',
   borderWidth: '1px',
   borderStyle: 'solid',
@@ -116,6 +118,7 @@ const optionStyle: React.CSSProperties = {
   cursor: 'pointer',
   transition: 'all 0.2s ease',
   backgroundColor: '#fff',
+  justifyContent: 'space-between',
 };
 
 const optionSelectedStyle: React.CSSProperties = {
@@ -131,19 +134,12 @@ const radioStyle: React.CSSProperties = {
 };
 
 const optionLabelStyle: React.CSSProperties = {
-  fontSize: '0.95rem',
+  fontSize: '1rem',
   color: '#333',
   cursor: 'pointer',
   flex: 1,
-};
-
-const scaleLabelsStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  margin: '0.5rem 0',
-  fontSize: '0.85rem',
-  color: '#52734d',
-  fontWeight: '600',
+  textAlign: 'center',
+  fontWeight: '500',
 };
 
 const buttonContainerStyle: React.CSSProperties = {
@@ -170,6 +166,8 @@ const submitButtonStyle: React.CSSProperties = {
 const Screening: React.FC = () => {
   const router = useRouter();
   const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [showModal, setShowModal] = useState(false);
+  const [hasReadGuidelines, setHasReadGuidelines] = useState(false);
 
   // Check if user is logged in
   React.useEffect(() => {
@@ -202,6 +200,12 @@ const Screening: React.FC = () => {
   const reverseScored = [5, 6, 7];
 
   const handleAnswerChange = (questionIndex: number, value: number) => {
+    if (!hasReadGuidelines) {
+      alert('Silakan baca panduan terlebih dahulu sebelum mengisi screening!');
+      setShowModal(true);
+      return;
+    }
+    
     setAnswers(prev => ({
       ...prev,
       [questionIndex]: value
@@ -288,7 +292,166 @@ const Screening: React.FC = () => {
           <BackButton />
         </div>
         <h1 style={titleStyle}>Screening Kesehatan Mental</h1>
-        <p style={subtitleStyle}>Silakan jawab semua pertanyaan dengan jujur sesuai dengan perasaan Anda</p>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+          <button
+            style={{
+              backgroundColor: '#52734d',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '0.6rem 1.5rem',
+              fontSize: '1rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
+            }}
+            onClick={() => setShowModal(true)}
+            type="button"
+          >
+            Panduan
+          </button>
+        </div>
+        
+        {/* Status Panduan */}
+        <div style={{
+          maxWidth: '600px',
+          margin: '0 auto 1.5rem auto',
+          padding: '1rem',
+          borderRadius: '8px',
+          backgroundColor: hasReadGuidelines ? '#d4edda' : '#fff3cd',
+          border: `1px solid ${hasReadGuidelines ? '#c3e6cb' : '#ffeaa7'}`,
+          textAlign: 'center'
+        }}>
+          {hasReadGuidelines ? (
+            <p style={{ 
+              color: '#155724', 
+              margin: '0', 
+              fontWeight: '600',
+              fontSize: '0.95rem'
+            }}>
+              ✅ Panduan sudah dibaca - Anda dapat mengisi screening
+            </p>
+          ) : (
+            <p style={{ 
+              color: '#856404', 
+              margin: '0', 
+              fontWeight: '600',
+              fontSize: '0.95rem'
+            }}>
+              ⚠️ Silakan baca panduan terlebih dahulu sebelum mengisi screening
+            </p>
+          )}
+        </div>
+        
+        {showModal && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: 'rgba(0,0,0,0.25)',
+              zIndex: 1000,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onClick={() => setShowModal(false)}
+          >
+            <div
+              style={{
+          background: '#fff',
+          borderRadius: '12px',
+          maxWidth: '420px',
+          width: '90%',
+          maxHeight: '85vh',
+          padding: '2rem 1.5rem',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.13)',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+              }}
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+          onClick={() => setShowModal(false)}
+          style={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            background: 'transparent',
+            border: 'none',
+            fontSize: '1.5rem',
+            color: '#52734d',
+            cursor: 'pointer',
+            fontWeight: 700,
+            zIndex: 1,
+          }}
+          aria-label="Tutup"
+          type="button"
+              >
+          ×
+              </button>
+              
+              <div style={{
+                overflowY: 'auto',
+                paddingRight: '0.5rem',
+                marginRight: '-0.5rem',
+              }}>
+                <h2 style={{ color: '#2d5016', fontWeight: 700, fontSize: '1.2rem', marginBottom: '1rem', textAlign: 'center' }}>
+            Panduan Pengisian
+                </h2>
+                <p style={{ color: '#333', fontSize: '1rem', marginBottom: '1rem' }}>
+            Formulir ini menggunakan kuesioner deteksi dini faktor risiko bunuh diri untuk membantu mengenali kondisi psikologis Anda secara lebih baik.
+                </p>
+                <p style={{ color: '#333', fontSize: '1rem', marginBottom: '1rem' }}>
+            Harap diingat, hasil dari screening ini <b>bukan diagnosis medis</b>, melainkan alat bantu awal untuk mengetahui kondisi risiko yang mungkin perlu mendapat perhatian lebih lanjut.
+                </p>
+                <div style={{ background: '#e6f4ea', borderRadius: 8, padding: '0.8rem', marginBottom: '1rem', color: '#52734d', fontWeight: 600 }}>
+            ✨ Mohon baca instruksi sebelum mengisi:
+                </div>
+                <ul style={{ color: '#333', fontSize: '0.98rem', paddingLeft: '1.2rem', marginBottom: '1.5rem' }}>
+            <li>1. Berikut ini terdapat tabel dengan beberapa pernyataan yang perlu Anda jawab.</li>
+            <li>2. Tidak ada batas waktu dalam mengisi seluruh pernyataan. Diperkirakan dapat diselesaikan dalam 15–20 menit.</li>
+            <li>3. Tidak ada jawaban benar/salah atau baik/buruk. Jawablah sesuai dengan keadaan Anda dalam dua minggu terakhir.</li>
+            <li>4. Berilah tanda silang (✔) pada kolom yang sesuai dengan pilihan Anda.</li>
+                </ul>
+                
+                <div style={{
+                  borderTop: '1px solid #e6f4ea',
+                  paddingTop: '1rem',
+                  textAlign: 'center'
+                }}>
+                  <button
+                    onClick={() => {
+                      setHasReadGuidelines(true);
+                      setShowModal(false);
+                    }}
+                    style={{
+                      backgroundColor: '#52734d',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '0.8rem 1.5rem',
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.2s ease',
+                      width: '100%'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#2d5016';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#52734d';
+                    }}
+                  >
+                    ✓ Saya Sudah Memahami Panduan
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       
       <div style={progressContainerStyle}>
         <div style={progressBarStyle(progress)}></div>
@@ -301,32 +464,58 @@ const Screening: React.FC = () => {
         {questions.map((question, index) => {
           const labels = getScaleLabels(index);
           return (
-            <div key={index} style={questionContainerStyle}>
+            <div key={index} style={{
+              ...questionContainerStyle,
+              opacity: hasReadGuidelines ? 1 : 0.6,
+              pointerEvents: hasReadGuidelines ? 'auto' : 'none',
+              border: hasReadGuidelines ? '1px solid #e6f4ea' : '1px solid #ffcccc',
+              backgroundColor: hasReadGuidelines ? '#fff' : '#f9f9f9'
+            }}>
               <div style={questionTextStyle}>
                 {index + 1}. {question}
-              </div>
-              <div style={scaleLabelsStyle}>
-                <span>{labels.left}</span>
-                <span>{labels.right}</span>
+                {!hasReadGuidelines && (
+                  <div style={{
+                    fontSize: '0.85rem',
+                    color: '#dc3545',
+                    fontWeight: '500',
+                    marginTop: '0.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.3rem'
+                  }}>
+                    🔒 Baca panduan terlebih dahulu
+                  </div>
+                )}
               </div>
               <div style={optionsContainerStyle}>
-                {[1, 2, 3, 4, 5].map(value => (
-                  <label
-                    key={value}
-                    style={answers[index] === value ? optionSelectedStyle : optionStyle}
-                    onClick={() => handleAnswerChange(index, value)}
-                  >
-                    <input
-                      type="radio"
-                      name={`question-${index}`}
-                      value={value}
-                      checked={answers[index] === value}
-                      onChange={() => handleAnswerChange(index, value)}
-                      style={radioStyle}
-                    />
-                    <span style={optionLabelStyle}>{value}</span>
-                  </label>
-                ))}
+                {[1, 2, 3, 4, 5].map(value => {
+                  const getScaleLabel = (val: number) => {
+                    if (val === 1) return 'SANGAT TIDAK SETUJU';
+                    if (val === 2) return 'TIDAK SETUJU';
+                    if (val === 3) return 'NETRAL';
+                    if (val === 4) return 'SETUJU';
+                    if (val === 5) return 'SANGAT SETUJU';
+                    return '';
+                  };
+                  
+                  return (
+                    <label
+                      key={value}
+                      style={answers[index] === value ? optionSelectedStyle : optionStyle}
+                      onClick={() => handleAnswerChange(index, value)}
+                    >
+                      <input
+                        type="radio"
+                        name={`question-${index}`}
+                        value={value}
+                        checked={answers[index] === value}
+                        onChange={() => handleAnswerChange(index, value)}
+                        style={radioStyle}
+                      />
+                      <span style={optionLabelStyle}>{getScaleLabel(value)}</span>
+                    </label>
+                  );
+                })}
               </div>
             </div>
           );
@@ -336,23 +525,28 @@ const Screening: React.FC = () => {
           <button
             style={{
               ...submitButtonStyle,
-              backgroundColor: isComplete ? '#52734d' : '#cccccc',
-              cursor: isComplete ? 'pointer' : 'not-allowed',
+              backgroundColor: (isComplete && hasReadGuidelines) ? '#52734d' : '#cccccc',
+              cursor: (isComplete && hasReadGuidelines) ? 'pointer' : 'not-allowed',
             }}
             onClick={handleSubmit}
-            disabled={!isComplete}
+            disabled={!isComplete || !hasReadGuidelines}
             onMouseEnter={(e) => {
-              if (isComplete) {
+              if (isComplete && hasReadGuidelines) {
                 e.currentTarget.style.backgroundColor = '#2d5016';
               }
             }}
             onMouseLeave={(e) => {
-              if (isComplete) {
+              if (isComplete && hasReadGuidelines) {
                 e.currentTarget.style.backgroundColor = '#52734d';
               }
             }}
           >
-            {isComplete ? 'Lihat Hasil' : `Jawab ${questions.length - Object.keys(answers).length} Pertanyaan Lagi`}
+            {!hasReadGuidelines 
+              ? 'Baca Panduan Terlebih Dahulu' 
+              : isComplete 
+                ? 'Lihat Hasil' 
+                : `Jawab ${questions.length - Object.keys(answers).length} Pertanyaan Lagi`
+            }
           </button>
         </div>
       </div>
