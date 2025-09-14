@@ -45,9 +45,9 @@ const titleStyle: React.CSSProperties = {
 
 const doctorCardStyle: React.CSSProperties = {
   width: '100%',
-  maxWidth: '400px',
+  maxWidth: '380px',
   margin: '2rem auto',
-  padding: '2rem',
+  padding: '2rem 1.5rem',
   backgroundColor: '#fff',
   borderRadius: '16px',
   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)',
@@ -55,7 +55,7 @@ const doctorCardStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  gap: '1rem',
+  gap: '1.2rem',
   cursor: 'pointer',
   transition: 'all 0.3s ease',
   textDecoration: 'none',
@@ -78,37 +78,62 @@ const profileCircleStyle: React.CSSProperties = {
 
 const doctorInfoStyle: React.CSSProperties = {
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'center',
   gap: '1rem',
   width: '100%',
+  textAlign: 'center',
 };
 
 const doctorTextStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.25rem',
+  gap: '0.5rem',
+  alignItems: 'center',
+  width: '100%',
 };
 
 const doctorNameStyle: React.CSSProperties = {
-  fontSize: '1.5rem',
+  fontSize: '1.4rem',
   fontWeight: '600',
   color: '#2d5016',
   margin: '0',
-  textAlign: 'left',
+  textAlign: 'center',
 };
 
 const doctorTitleStyle: React.CSSProperties = {
   fontSize: '1rem',
   color: '#52734d',
   margin: '0',
-  textAlign: 'left',
+  textAlign: 'center',
+  fontWeight: '500',
 };
 
 const Konsultasi: React.FC = () => {
   const router = useRouter();
   
   const handleCardClick = () => {
-    window.open('https://forms.gle/jRaeXmx5AyxFn2YH6', '_blank');
+    const phoneNumber = '6282284324072';
+    const message = 'Halo, saya ingin konsultasi kesehatan mental melalui aplikasi SIGI.';
+    
+    // Try multiple WhatsApp URL formats for better compatibility
+    const whatsappUrls = [
+      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+      `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`,
+      `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`
+    ];
+    
+    // Try wa.me first (most reliable)
+    try {
+      window.open(whatsappUrls[0], '_blank');
+    } catch (error) {
+      // Fallback: copy number and show alert
+      navigator.clipboard.writeText('+62 822-8432-4072').then(() => {
+        alert('Nomor WhatsApp telah disalin: +62 822-8432-4072\nSilakan buka WhatsApp dan tempel nomor tersebut.');
+      }).catch(() => {
+        alert('Hubungi via WhatsApp: +62 822-8432-4072');
+      });
+    }
   };
 
   return (
@@ -178,14 +203,93 @@ const Konsultasi: React.FC = () => {
               <rect x="11" y="18" width="2" height="3" rx="1" fill="#52734d"/>
             </svg>
           </div>
+          
           <div style={doctorTextStyle}>
             <h3 style={doctorNameStyle}>Dr. Ahmad Santoso</h3>
-            <p style={doctorTitleStyle}>Sp.KJ</p>
+            <p style={doctorTitleStyle}>Spesialis Kesehatan Jiwa</p>
+            
+            <div style={{
+              marginTop: '0.8rem',
+              padding: '0.7rem 1rem',
+              backgroundColor: '#e6f4ea',
+              borderRadius: '8px',
+              border: '1px solid #b7e4c7',
+              width: '100%',
+              maxWidth: '280px'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '0.8rem',
+                color: '#2d5016'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <span style={{ fontSize: '1.1rem' }}>📱</span>
+                  <span style={{ 
+                    fontSize: '1rem', 
+                    fontWeight: '600',
+                    letterSpacing: '0.3px'
+                  }}>
+                    +62 822-8432-4072
+                  </span>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText('+62 822-8432-4072').then(() => {
+                      alert('Nomor WhatsApp telah disalin!');
+                    }).catch(() => {
+                      alert('Gagal menyalin nomor');
+                    });
+                  }}
+                  style={{
+                    padding: '0.3rem 0.6rem',
+                    backgroundColor: '#52734d',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    fontSize: '0.8rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s ease',
+                    minWidth: '50px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#2d5016';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#52734d';
+                  }}
+                >
+                  Salin
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <p style={{ fontSize: '0.9rem', color: '#52734d', margin: '0.5rem 0 0 0', textAlign: 'center' }}>
-          Klik untuk konsultasi
-        </p>
+        
+        <div style={{
+          width: '100%',
+          padding: '0.8rem',
+          backgroundColor: '#f0f8f0',
+          borderRadius: '8px',
+          textAlign: 'center',
+          border: '1px solid #d4e8d4'
+        }}>
+          <p style={{ 
+            fontSize: '0.95rem', 
+            color: '#2d5016', 
+            margin: '0',
+            fontWeight: '500'
+          }}>
+            💬 Klik untuk konsultasi via WhatsApp
+          </p>
+        </div>
       </div>
       </div>
     </div>
