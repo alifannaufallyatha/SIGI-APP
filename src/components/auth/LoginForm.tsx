@@ -34,7 +34,7 @@ const LoginForm: React.FC = () => {
     <div className={styles.loginContainer}>
       <div className={styles.branding}>
         <h1 className={styles.title}>SIGI</h1>
-        <p className={styles.subtitle}>Montal FeathCrack</p>
+        <p className={styles.subtitle}>Mental Health Check by Nursing Student</p>
       </div>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2>Login</h2>
